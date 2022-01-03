@@ -19,9 +19,9 @@ class MeasurementSender:
 
 
 if __name__ == "__main__":
-    MeasurementSender = MeasurementSender(destination_url=r'http://localhost:5000/add_measurement')
-    MeasurementSender.send(year="2021",
+    MeasurementSender = MeasurementSender(destination_url=r'https://rainly-api.herokuapp.com/add_measurement')
+    MeasurementSender.send(year="2022",
                            month="January",
-                           day="3",
+                           day="5",
                            clock_time="18:00",
-                           rainfall="10.00")
+                           rainfall="1.00")
