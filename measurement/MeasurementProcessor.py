@@ -12,7 +12,7 @@ class MeasurementProcessor(object):
     def run(self):
 
         while True:
-            rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date = self.measurementReader.read_fake()
+            rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date = self.measurement_reader.read_fake()
             self.measurement_sender.send(
                 rainfall=rainfall,
                 temperature=temperature,
