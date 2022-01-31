@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import datetime
 import locale
+from random import random
+
 from gpiozero import Button
 from utilities import utilities
 
@@ -38,7 +40,14 @@ class MeasurementReader(object):
                                                                                                            rainfall))
         return year, month, day, clock_time, rainfall
 
-
-if __name__ == "__main__":
-    measurementReader = MeasurementReader(interval=10)
-    measurementReader.read()
+    def read_fake(self):
+        utilities.wait_for(interval=self.interval)
+        rainfall = round(random.uniform(0, 4), 1)
+        temperature = round(random.uniform(-5, 8), 1)
+        humidity = round(random.uniform(60, 90), 1)
+        pressure = round(random.uniform(980, 1020), 1)
+        wind_speed_avg = round(random.uniform(0, 35), 1)
+        wind_speed_max = round(random.uniform(5, 60), 1)
+        wind_direction = round(random.uniform(0, 360), 1)
+        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+        return rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date

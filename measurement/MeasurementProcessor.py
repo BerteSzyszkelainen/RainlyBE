@@ -13,14 +13,14 @@ class MeasurementProcessor(object):
         measurementSender = MeasurementSender(destination_url=r'http://localhost:5000/add_measurement')
 
         while True:
-            year, month, day, clock_time, rainfall = measurementReader.read()
-            measurementSender.send(year=year,
-                                   month=month,
-                                   day=day,
-                                   clock_time=clock_time,
-                                   rainfall=rainfall)
-
-if __name__ == "__main__":
-    measurementProcessor = MeasurementProcessor()
-    measurementProcessor.run()
-    print("Measurement processor executed successfully!")
+            rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date = measurementReader.read_fake()
+            measurementSender.send(
+                rainfall=rainfall,
+                temperature=temperature,
+                humidity=humidity,
+                pressure=pressure,
+                wind_speed_avg=wind_speed_avg,
+                wind_speed_max=wind_speed_max,
+                wind_direction=wind_direction,
+                date=date
+            )
