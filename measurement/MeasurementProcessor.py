@@ -1,29 +1,23 @@
 #!/usr/bin/python3
 from measurement.MeasurementReader import MeasurementReader
-from measurement.MeasurementSender import MeasurementSender
+from measurement.MeasurementSaver import MeasurementSaver
 
 
 class MeasurementProcessor(object):
 
     def __init__(self):
-        self.measurement_reader = MeasurementReader(interval=300)
-        self.measurement_sender = MeasurementSender(destination_url=r'https://rainly-api.herokuapp.com/add_measurement')
+        self.measurement_reader = MeasurementReader(interval=900)
+        self.measurement_saver = MeasurementSaver(destination_file=r'data/rainfall')
 
     def run(self):
 
         while True:
-            rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date = self.measurement_reader.read_fake()
-            self.measurement_sender.send(
-                rainfall=rainfall,
-                temperature=temperature,
-                humidity=humidity,
-                pressure=pressure,
-                wind_speed_avg=wind_speed_avg,
-                wind_speed_max=wind_speed_max,
-                wind_direction=wind_direction,
-                date=date
+            timestamp, rainfall = self.measurement_reader.read()
+            self.measurement_saver.save(
+                timestamp=timestamp,
+                rainfall=rainfall
             )
 
 if __name__ == '__main__':
-    measurement_processor = MeasurementProcessor()
-    measurement_processor.run()
+    obj = MeasurementProcessor()
+    obj.run()

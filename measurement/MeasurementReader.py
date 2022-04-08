@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import datetime
-from random import random
 
 from gpiozero import Button
 import time
@@ -9,7 +8,7 @@ def wait_for(interval):
     start_time = time.time()
     while time.time() - start_time <= interval:
         print("Measurement in process...")
-        time.sleep(2)
+        time.sleep(60)
 
 class MeasurementReader(object):
     BUCKET_SIZE = 0.2794
@@ -29,27 +28,13 @@ class MeasurementReader(object):
     def read(self):
         wait_for(interval=self.interval)
         rainfall = round(self.tip_count * self.BUCKET_SIZE, 2)
+        timestamp = datetime.datetime.now()
         self.reset_rainfall()
-        current_timestamp = datetime.datetime.now()
-        year = current_timestamp.strftime("%Y")
-        month = current_timestamp.strftime("%B")
-        day = current_timestamp.strftime("%d")
-        clock_time = current_timestamp.strftime("%H:%M:%S")
-        print("Successfully read data, year: {}, month: {}, day: {}, clock_time: {},  rainfall: {}".format(year,
-                                                                                                           month,
-                                                                                                           day,
-                                                                                                           clock_time,
-                                                                                                           rainfall))
-        return year, month, day, clock_time, rainfall
+        print(f"Read rainfall: {rainfall} mm t timestamp {timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        return timestamp, rainfall
 
-    def read_fake(self):
-        wait_for(interval=self.interval)
-        rainfall = round(random.uniform(0, 4), 1)
-        temperature = round(random.uniform(-5, 8), 1)
-        humidity = round(random.uniform(60, 90), 1)
-        pressure = round(random.uniform(980, 1020), 1)
-        wind_speed_avg = round(random.uniform(0, 35), 1)
-        wind_speed_max = round(random.uniform(5, 60), 1)
-        wind_direction = round(random.uniform(0, 360), 1)
-        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
-        return rainfall, temperature, humidity, pressure, wind_speed_avg, wind_speed_max, wind_direction, date
+if __name__ == "__main__":
+    obj = MeasurementReader(interval=20)
+    obj.read()
+
+
