@@ -6,8 +6,8 @@ from measurement.MeasurementSaver import MeasurementSaver
 class MeasurementProcessor(object):
 
     def __init__(self):
-        self.measurement_reader = MeasurementReader(interval=900)
-        self.measurement_saver = MeasurementSaver(destination_file=r'data/rainfall')
+        self.measurement_reader = MeasurementReader(interval=300)
+        self.measurement_saver = MeasurementSaver(destination_file=r'/home/rainly/Projects/RainlyBE/data/rainfall')
 
     def run(self):
 
